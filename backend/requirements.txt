@@ -1,0 +1,11 @@
+Flask
+Flask-CORS
+openai
+requests
+python-dotenv
+pykakasi
+fugashi
+unidic-lite
+pykakasi
+fugashi
+unidic-lite

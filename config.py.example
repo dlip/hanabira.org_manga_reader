@@ -1,0 +1,97 @@
+# Configuration
+class Config:
+
+    # --- Required editing --- #
+    
+    # API Keys
+    OPENAI_API_KEY = ""
+    OPENAI_ORG_ID = ""
+    DEEPL_API_KEY = ""
+
+
+
+
+    # --- Optional editing --- #
+
+    # External APIs
+    DEEPL_API_URL = "https://api-free.deepl.com/v2/translate"
+
+    # OpenAI Models (aliases -> metadata)
+    # Note: api_name should match an actual OpenAI model id. Some examples here are placeholders
+    # provided by the user and may not be available in your account.
+    OPENAI_MODELS = {
+        # User provided examples (may be experimental or unavailable)
+    "gpt-5": {
+            "label": "GPT-5",
+            "api_name": "gpt-5",
+            "family": "gpt-5",
+            "tier": "premium",
+            "pricing": {"input": 1.25, "cached_input": 0.125, "output": 10.0},
+            "notes": "Best for coding/agentic tasks",
+            "endpoint": "responses",
+            "max_param": "max_output_tokens"
+        },
+    "gpt-5-mini": {
+            "label": "GPT-5 mini",
+            "api_name": "gpt-5-mini",
+            "family": "gpt-5",
+            "tier": "fast",
+            "pricing": {"input": 0.25, "cached_input": 0.025, "output": 2.0},
+            "notes": "Faster, cheaper version",
+            "endpoint": "responses",
+            "max_param": "max_output_tokens"
+        },
+    "gpt-5-nano": {
+            "label": "GPT-5 nano",
+            "api_name": "gpt-5-nano",
+            "family": "gpt-5",
+            "tier": "ultra-fast",
+            "pricing": {"input": 0.05, "cached_input": 0.005, "output": 0.4},
+            "notes": "Fastest, cheapest—great for summarization/classification",
+            "endpoint": "responses",
+            "max_param": "max_output_tokens"
+        },
+    "gpt-4.1": {
+            "label": "GPT-4.1",
+            "api_name": "gpt-4.1",
+            "family": "gpt-4.1",
+            "tier": "premium",
+            "pricing": {"input": 3.0, "cached_input": 0.75, "output": 12.0, "training": 25.0},
+            "notes": "Supports fine-tuning",
+            "endpoint": "responses",
+            "max_param": "max_output_tokens"
+        },
+    "gpt-4.1-mini": {
+            "label": "GPT-4.1 mini",
+            "api_name": "gpt-4.1-mini",
+            "family": "gpt-4.1",
+            "tier": "fast",
+            "pricing": {"input": 0.8, "cached_input": 0.2, "output": 3.2, "training": 5.0},
+            "notes": "Fine-tuning capable",
+            "endpoint": "responses",
+            "max_param": "max_output_tokens"
+        },
+    "gpt-4.1-nano": {
+            "label": "GPT-4.1 nano",
+            "api_name": "gpt-4.1-nano",
+            "family": "gpt-4.1",
+            "tier": "ultra-fast",
+            "pricing": {"input": 0.2, "cached_input": 0.05, "output": 0.8, "training": 1.5},
+            "notes": "Fine-tuning capable",
+            "endpoint": "responses",
+            "max_param": "max_output_tokens"
+        },
+    "o4-mini": {
+            "label": "o4-mini",
+            "api_name": "o4-mini",
+            "family": "o4",
+            "tier": "rft",
+            "pricing": {"input": 4.0, "cached_input": 1.0, "output": 16.0, "training": 100.0},
+            "notes": "Reinforcement fine-tuning",
+            "endpoint": "responses",
+            "max_param": "max_output_tokens"
+        },
+    }
+
+    # Default model (avoid deprecated GPT-3 family)
+    OPENAI_DEFAULT_MODEL = "gpt-4.1-mini"

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Last Read Functionality</title>
+</head>
+<body>
+    <script>
+        // Test the ContentManager methods directly
+        
+        // Sample data creation
+        const STORAGE_KEY = 'mokuro-reader-content';
+        
+        function createSampleData() {
+            const sampleData = {
+                series: [{
+                    id: 'ruri-rocks-series',
+                    title: 'Ruri Rocks',
+                    author: 'Sample Author',
+                    description: 'A sample manga series for testing',
+                    totalChapters: 5,
+                    status: 'ongoing',
+                    addedDate: Date.now() - 86400000, // 1 day ago
+                    lastReadDate: Date.now() - 3600000, // 1 hour ago
+                }],
+                chapters: [{
+                    id: 'ruri-rocks-ch-1',
+                    seriesId: 'ruri-rocks-series',
+                    chapterNumber: 1,
+                    title: 'First Chapter',
+                    filePath: '/public/ruri_rocks_vol1/ruri_rocks_ch_1.html',
+                    pageCount: 20,
+                    addedDate: Date.now() - 86400000,
+                }],
+                progress: [{
+                    seriesId: 'ruri-rocks-series',
+                    chapterId: 'ruri-rocks-ch-1',
+                    currentPage: 5,
+                    totalPages: 20,
+                    percentage: 25,
+                    lastReadDate: Date.now() - 3600000, // 1 hour ago
+                    isCompleted: false,
+                }],
+                bookmarks: [],
+                sessions: [],
+                lastUpdated: Date.now(),
+            };
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(sampleData));
+            console.log('Sample data created!', sampleData);
+        }
+        
+        function testGetLastReadProgress() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (!stored) {
+                console.log('No data found');
+                return null;
+            }
+            
+            const data = JSON.parse(stored);
+            const progress = data.progress || [];
+            
+            if (progress.length === 0) {
+                console.log('No progress found');
+                return null;
+            }
+            
+            // Find the most recent reading progress
+            const lastRead = progress.reduce((latest, current) => 
+                current.lastReadDate > latest.lastReadDate ? current : latest
+            );
+            
+            console.log('Last read progress:', lastRead);
+            return lastRead;
+        }
+        
+        // Create sample data and test
+        createSampleData();
+        testGetLastReadProgress();
+        
+        // Now test the homepage - the EmptyStateLanding should show the "Continue Reading" section
+        console.log('Navigate to the homepage to see the "Continue Reading" section!');
+    </script>
+</body>
+</html>

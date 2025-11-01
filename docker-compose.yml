@@ -1,0 +1,82 @@
+services:
+  # Backend Flask API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mokuro-backend
+    restart: unless-stopped
+    user: "1001:1001"  # Match frontend user for shared volume access
+    environment:
+      - FLASK_ENV=production
+      - FLASK_APP=app.py
+      - PYTHONUNBUFFERED=1
+    volumes:
+      #Persistent SQLite database and uploaded files
+      - backend_data:/app/data
+      - backend_logs:/app/logs
+      # Shared manga library with frontend
+      - manga_library:/app/shared/library
+      # Override config with host copy that contains API keys (DO NOT COMMIT secrets)
+      - ./backend/config.py:/app/config.py:ro
+    ports:
+      - "5000:5000"
+    networks:
+      - mokuro-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend Next.js App
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - BACKEND_URL=http://mokuro-backend:5000
+    container_name: mokuro-frontend
+    restart: unless-stopped
+    user: "1001:1001"  # Explicit user mapping for consistency
+    environment:
+      - NODE_ENV=production
+      - BACKEND_URL=http://mokuro-backend:5000
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+      - PORT=3000
+    volumes:
+      # Shared manga library with backend - standard Next.js public directory
+      - manga_library:/app/public/library
+      # Mount host-data for file browser access (read-only for import source files)
+      - ./host-data:/host-data:ro
+    ports:
+      - "3000:3000"
+    networks:
+      - mokuro-network
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# Persistent volumes
+volumes:
+  # Backend data (SQLite DB, config, uploads)
+  backend_data:
+    driver: local
+  # Backend logs
+  backend_logs:
+    driver: local
+  # Shared manga library (accessible by both services)
+  manga_library:
+    driver: local
+
+# Custom network for inter-service communication
+networks:
+  mokuro-network:
+    driver: bridge

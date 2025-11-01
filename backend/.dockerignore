@@ -1,0 +1,30 @@
+# Development and sensitive files
+config.py
+data/
+.env/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.log
+
+# Development tools
+.pytest_cache/
+.coverage
+.mypy_cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker
+Dockerfile*
+.dockerignore
