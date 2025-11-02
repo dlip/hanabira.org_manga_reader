@@ -18,7 +18,7 @@ services:
       # Shared manga library with frontend
       - manga_library:/app/shared/library
       # Override config with host copy that contains API keys (DO NOT COMMIT secrets)
-      - ./backend/config.py:/app/config.py:ro
+      - ./config.py:/app/config.py:ro
     ports:
       - "5000:5000"
     networks:

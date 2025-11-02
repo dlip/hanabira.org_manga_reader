@@ -4,9 +4,9 @@ class Config:
     # --- Required editing --- #
     
     # API Keys
-    OPENAI_API_KEY = ""
-    OPENAI_ORG_ID = ""
-    DEEPL_API_KEY = ""
+    OPENAI_API_KEY = "PLACEHOLDER"
+    OPENAI_ORG_ID = "PLACEHOLDER"
+    DEEPL_API_KEY = "PLACEHOLDER"
 
 
 
