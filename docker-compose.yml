@@ -36,14 +36,14 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - BACKEND_URL=http://mokuro-backend:5000
+        - BACKEND_URL=https://mokuro-api.dex-lips.duckdns.org
     container_name: mokuro-frontend
     restart: unless-stopped
     user: "1001:1001"  # Explicit user mapping for consistency
     environment:
       - NODE_ENV=production
-      - BACKEND_URL=http://mokuro-backend:5000
-      - NEXT_PUBLIC_API_URL=http://localhost:5000
+      - BACKEND_URL=https://mokuro-api.dex-lips.duckdns.org
+      - NEXT_PUBLIC_API_URL=https://mokuro-api.dex-lips.duckdns.org
       - PORT=3000
     volumes:
       # Shared manga library with backend - standard Next.js public directory

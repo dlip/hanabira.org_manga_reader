@@ -21,6 +21,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # Accept build argument for backend URL (for Docker builds)
 ARG BACKEND_URL=http://localhost:5000
 ENV BACKEND_URL=$BACKEND_URL
+ENV NEXT_PUBLIC_API_URL=$BACKEND_URL
 
 # Build the application
 RUN npm run build
