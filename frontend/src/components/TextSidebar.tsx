@@ -514,7 +514,7 @@ export default function TextSidebar({ className = '' }: TextSidebarProps) {
                     showFurigana={showFurigana}
                   />
                 ) : (
-                  <span className="font-japanese">{currentText}</span>
+                  <span className="font-japanese">{currentText.replace(/[\n\r\s]/g, '')}</span>
                 )}
               </div>
 
